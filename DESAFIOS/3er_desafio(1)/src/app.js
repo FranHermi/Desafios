@@ -5,7 +5,7 @@ app.use(json())
 app.use(urlencoded({extended:true}))
 let port = 8080
 
-import ProductManager from './desafio02.js';
+import ProductManager from './productManager.js';
 const products = new ProductManager()
 //const productManager = await fs.readFile(path, 'utf-8')
 
