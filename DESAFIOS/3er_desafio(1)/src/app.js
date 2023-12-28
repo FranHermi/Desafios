@@ -14,7 +14,7 @@ app.listen(port, ()=>{
 })
 
 //http://localhost:8080/products
-app.get('/products', (req, res)=>{
+app.get('/api/products', (req, res)=>{
     let readFiles = async ()=>{
         try{
             let productList = await products.readFileProducts()
@@ -27,20 +27,32 @@ app.get('/products', (req, res)=>{
 })
 
 //http://localhost:8080/products/:id
-app.get('/products/:pid', (req,res)=>{
+app.get('/api/products/:pid', (req,res)=>{
     let selectProduct = async ()=>{
         try{
             let productList = await products.readFileProducts()
             const {pid}=req.params
-            productoSelecto = productList.filter(user=>user.id!==parseInt(pid))
+            productoSelecto = productList.filter(prod=>prod.id!==parseInt(pid))
             console.log(productoSelecto)
         } catch(error){
             console.log('Producto no existe')
         }
     }
-    res.send(selectProduct)
+    res.send(selectProduct())
     
 })
+
+app.get('/api/products', (req, res)=>{
+    const limit = req.query.parseInt(limit);
+    if(limit){
+        let productList = products.readFileProducts()
+        const limitedProducts = productList.slice(0, limit)
+        res.send(limitedProducts)
+        return;
+    }
+    res.send()
+})
+
 
 //http://localhost:8080/products
 //http://localhost:8080/products?limit=5
