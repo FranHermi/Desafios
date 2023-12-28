@@ -1,5 +1,5 @@
 const { promises: fs } = require('fs')
-export default class ProductManager {
+class ProductManager {
     constructor(){
         this.products = []
         this.path='./products.json'
@@ -55,14 +55,9 @@ export default class ProductManager {
     async getProductById(pid){
         try{
             let productList = await this.readFileProducts()
-            const result = productList.find(prod => prod.id === pid)
+            const result = productList.find(prod => prod.id === Number(pid))
             if(result){
-                let newProductList = productList
-                let newResult = productList.filter((product)=>{
-                        return product.pid!=pid;
-                })
-                let finalProductList= newProductList-newResult
-                console.log(finalProductList)
+                console.log(this.products)
             }else{
                 return 'Not found'
             }
@@ -74,7 +69,7 @@ export default class ProductManager {
     async updateProduct(pid, campo, update){
         const updateArch = async () => {
         try{
-            campo = this.campo
+            campo === this.products.campo
             if(!campo){
                 return console.log('Campo no existente')
             }
@@ -112,6 +107,7 @@ export default class ProductManager {
     }
 }
 const products = new ProductManager()
+module.exports = ProductManager
 //console.log(products.addProducts({title:'producto uno', description: 'esto es un producto', price: 1000, thumbnail: 'imagen1', stock: 110, code:'abc111'}))
 //console.log(products.addProducts({title:'producto dos', description: 'esto es un producto2', price: 2000, thumbnail: 'imagen2', stock: 120, code:'abc222'}))
 //console.log(products.addProducts({title:'producto tres', description: 'esto es un producto', price: 3000, thumbnail: 'imagen3', stock: 130, code:'abc333'}))
