@@ -1,56 +1,41 @@
-const {promises} = require('fs')
+//npm run start:dev
+
 const express = require('express')
 const app = express()
-app.use(json())
-app.use(urlencoded({extended:true}))
-let port = 8080
+const products = require('./productManager.js')
 
-import ProductManager from './productManager.js';
-const products = new ProductManager()
-//const productManager = await fs.readFile(path, 'utf-8')
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+let port = 8080
 
 app.listen(port, ()=>{
     console.log(`Escuchando en el puerto ${port}`)
 })
 
-//http://localhost:8080/products
-app.get('/api/products', (req, res)=>{
-    let readFiles = async ()=>{
-        try{
-            let productList = await products.readFileProducts()
-            return productList
-            } catch(error){
-                console.log('error01')
-            }
-    }
-    res.send(readFiles())
+//http://localhost:8080/api/products
+app
+    .get('/api/products', (req, res)=>{
+    let productList = products.products.readFileProducts()
+    console.log(productList)
+    res.send(productList)
 })
-
-//http://localhost:8080/products/:id
-app.get('/api/products/:pid', (req,res)=>{
-    let selectProduct = async ()=>{
-        try{
-            let productList = await products.readFileProducts()
-            const {pid}=req.params
-            productoSelecto = productList.filter(prod=>prod.id!==parseInt(pid))
-            console.log(productoSelecto)
-        } catch(error){
-            console.log('Producto no existe')
-        }
-    }
-    res.send(selectProduct())
-    
-})
-
-app.get('/api/products', (req, res)=>{
+    .get('/api/products', (req, res)=>{
     const limit = req.query.parseInt(limit);
     if(limit){
-        let productList = products.readFileProducts()
+        let productList = products.products.readFileProducts()
         const limitedProducts = productList.slice(0, limit)
         res.send(limitedProducts)
-        return;
     }
-    res.send()
+})
+//http://localhost:8080/api/products/:id
+    .get('/api/products/:pid', (req,res)=>{
+    const selectedProduct = ()=>{
+        let productList =  products.products.readFileProducts()
+        const {pid}=req.params
+        productoSelecto = productList.filter(prod=>prod.id!==parseInt(pid))
+        console.log(productoSelecto)
+    res.send(selectedProduct)
+    }    
 })
 
 
