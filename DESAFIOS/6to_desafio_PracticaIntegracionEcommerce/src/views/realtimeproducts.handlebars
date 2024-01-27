@@ -1,0 +1,24 @@
+<!--Acá se renderizarán los productos pero en tiempo real con WebSocket-->
+<!--ENDPOINT: '/realtimeproducts'-->
+<!--Debe tener un formulario para crear productos o emliminarlos-->
+<div>
+    <h1>Listado de Productos en tiempo real</h1>
+</div>
+<div>
+    <input id="nproductId" type="number">
+    <input id="nproductTitle" type="text">
+    <input id="nproductDescription" type="text">
+    <input id="nproductPrice" type="text">
+    <input id="nproductStock" type="text">
+    <input id="nproductCode" type="text">
+    <input id="nproductCategory" type="number">
+    <input id="nproductStatus" type="number">
+    <input id="nproductThumbnail" type="file" name="myfile">
+    <input type="button" id="send" value="Send">
+    <input type="button" id="delete" value="delete">
+
+</div>
+<div id="productsListIRT"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
