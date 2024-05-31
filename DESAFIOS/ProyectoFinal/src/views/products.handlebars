@@ -1,0 +1,17 @@
+<div>
+    <h1>PRODUCTOS</h1>
+    {{#each products}}
+        <h2>{{this.title}} - {{this.description}}</h2>
+        <h3 id="productId">{{this.productId}}</h3>
+        <p><strong>Precio:</strong>{{this.price}} - <strong>Stock:</strong>{{this.stock}}</p><br>
+        <p><strong>Categoria:</strong>{{this.category}} - <strong>Código:</strong>{{this.code}}</p>
+        <input type="button" id="addToCart" value="Agregar al carrito">
+        <input type="text" id="cartIdtoAdd" value="Id del carrito">
+    {{/each}}
+    {{#if hasPrevPage}}
+        <a href="/products?page={{prevPage}}">Anterior</a>
+    {{/if}}
+    {{#if hasNextPage}}
+        <a href="/products?page={{nextPage}}">Anterior</a>
+    {{/if}}
+</div>
